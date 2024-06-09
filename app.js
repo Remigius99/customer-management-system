@@ -6,8 +6,11 @@ const path = require('path');
 const app = express();
 require('dotenv').config();
 
+// To get the database password from the .env file
+const PASS = process.env.DATABASE_PASSWORD;
+
 // Importing routes
-const studentRoutes = require('./routes/studentRoutes');
+const customerRoutes = require('./routes/customer');
 
 // settings
 app.set('port', process.env.PORT || 3000);
@@ -20,18 +23,18 @@ app.use(myConnection(mysql, {
     host: 'sql5.freesqldatabase.com',
     user: 'sql5712897',
     password: 'EM1iPPGtWQ',
-    port: 3306,
+    port: '3306',
     database: 'sql5712897'
 }, 'single'));
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 
 // Routes
-app.use('/api', studentRoutes);
+app.use('/', customerRoutes);
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Starting the server
 app.listen(app.get('port'), () => {
-    console.log(`Server on port ${app.get('port')}`);
-});
+    console.log('Server on port 3000');
+})
